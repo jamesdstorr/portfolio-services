@@ -1,16 +1,27 @@
+
+
 type Query {
-    bookById(id: ID): Book
+    getAllArticles: [Article!]
+    getArticleById(id: String!): Article
 }
 
-type Book {
-    id: ID
-    name: String
-    pageCount: Int
-    author: Author
+input ArticleInput {
+    title: String!
+    summary: String!
+    content: String!
+    imageUrl: String!
 }
 
-type Author {
-    id: ID
-    firstName: String
-    lastName: String
+type Mutation {
+    createArticle(input: ArticleInput!): Article!
 }
+
+type Article {
+    id: String
+    title: String
+    summary: String
+    content: String
+    imageUrl: String
+    date: String
+}
+
