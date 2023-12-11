@@ -15,17 +15,29 @@ import com.portfoliographql.Portfolio.GraphQL.repository.ArticleRepository;
 public class ArticleQueryResolver implements GraphQLQueryResolver {
 
     private final ArticleRepository articleRepository;
+   
+
     public ArticleQueryResolver(ArticleRepository articleRepository) {
         this.articleRepository = articleRepository;
     }
-   @QueryMapping
+
+   
+
+    @QueryMapping
     public List<Article> getAllArticles() {
         System.out.println("getAllArticles!");
         return articleRepository.findAll();
     }
-   @QueryMapping
-    public Article getArticleById(@Argument String id) {
+
+    @QueryMapping
+    public Article getArticleById(@Argument("id") String id) {
         return articleRepository.findById(id).orElse(null);
     }
-    
+
+    @QueryMapping
+    public List<Article> getArticlesByDate(@Argument("from") String from, @Argument("to") String to) {
+        return articleRepository.findByDateBetween(from, to);
+    }
+
+  
 }

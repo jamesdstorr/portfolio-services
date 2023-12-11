@@ -1,11 +1,22 @@
 package com.portfoliographql.Portfolio.GraphQL.model;
 
+import java.util.List;
+
 public class ArticleInput {
     private String title;
     private String summary;
     private String content;
     private String imageUrl;
+    private List<String> categories;
 
+
+    public List<String> getCategories(){
+        return categories;
+    }
+
+    public void setCategories(List<String> categories){
+        this.categories = categories;
+    }
 
     public String getTitle(){
         return title;

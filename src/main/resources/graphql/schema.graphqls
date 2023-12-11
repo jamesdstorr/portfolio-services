@@ -3,6 +3,8 @@
 type Query {
     getAllArticles: [Article!]
     getArticleById(id: String!): Article
+    getArticlesByDate(from: String!, to: String!): [Article!]
+    getCategories: [Category]
 }
 
 input ArticleInput {
@@ -10,6 +12,7 @@ input ArticleInput {
     summary: String!
     content: String!
     imageUrl: String!
+    categories: [String]
 }
 
 type Mutation {
@@ -23,5 +26,17 @@ type Article {
     content: String
     imageUrl: String
     date: String
+    categories: [String]
 }
+
+type Category {
+    id: String
+    name: String
+}
+
+
+
+
+
+
 

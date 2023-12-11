@@ -21,7 +21,7 @@ public class ArticleMutationResolver implements GraphQLMutationResolver{
     }
 
     @MutationMapping
-    public Article createArticle(@Argument ArticleInput input) {
+    public Article createArticle(@Argument("input") ArticleInput input) {
         System.out.println("createArticle");
         LocalDate today = LocalDate.now();
         try {
@@ -31,6 +31,7 @@ public class ArticleMutationResolver implements GraphQLMutationResolver{
             article.setContent(input.getContent());
             article.setImageUrl(input.getImageUrl());
             article.setDate(today.toString());
+            article.setCategories(input.getCategories());
             System.out.println(article.getTitle());
             return articleRepository.save(article);
         } catch (Exception e) {

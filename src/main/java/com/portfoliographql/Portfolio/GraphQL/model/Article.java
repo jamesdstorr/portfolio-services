@@ -1,5 +1,7 @@
 package com.portfoliographql.Portfolio.GraphQL.model;
 
+import java.util.List;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -13,6 +15,17 @@ public class Article {
     private String content;
     private String imageUrl;
     private String date;
+    private List<String> categories;
+
+
+    public List<String> getCategories(){
+        return categories;
+    }
+
+
+    public void setCategories(List<String> categories){
+        this.categories = categories;
+    }
 
 
 public String getId(){
