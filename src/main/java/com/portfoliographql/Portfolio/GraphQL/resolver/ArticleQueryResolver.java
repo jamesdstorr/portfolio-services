@@ -25,7 +25,6 @@ public class ArticleQueryResolver implements GraphQLQueryResolver {
 
     @QueryMapping
     public List<Article> getAllArticles() {
-        System.out.println("getAllArticles!");
         return articleRepository.findAll();
     }
 

@@ -16,6 +16,17 @@ public class Article {
     private String imageUrl;
     private String date;
     private List<String> categories;
+    private boolean isPublished;
+
+
+    public boolean isPublished() {
+        return isPublished;
+    }
+
+
+    public void setPublished(boolean isPublished) {
+        this.isPublished = isPublished;
+    }
 
 
     public List<String> getCategories(){

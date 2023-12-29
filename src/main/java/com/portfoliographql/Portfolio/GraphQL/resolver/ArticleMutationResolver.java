@@ -32,6 +32,7 @@ public class ArticleMutationResolver implements GraphQLMutationResolver{
             article.setImageUrl(input.getImageUrl());
             article.setDate(today.toString());
             article.setCategories(input.getCategories());
+            article.setPublished(input.isPublished());
             System.out.println(article.getTitle());
             return articleRepository.save(article);
         } catch (Exception e) {

@@ -13,6 +13,7 @@ input ArticleInput {
     content: String!
     imageUrl: String!
     categories: [String]
+    isPublished: Boolean!
 }
 
 type Mutation {
@@ -27,6 +28,7 @@ type Article {
     imageUrl: String
     date: String
     categories: [String]
+    isPublished: Boolean
 }
 
 type Category {

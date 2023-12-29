@@ -8,7 +8,16 @@ public class ArticleInput {
     private String content;
     private String imageUrl;
     private List<String> categories;
+    private boolean isPublished;
 
+
+    public boolean isPublished() {
+        return isPublished;
+    }
+
+    public void setPublished(boolean isPublished) {
+        this.isPublished = isPublished;
+    }
 
     public List<String> getCategories(){
         return categories;
