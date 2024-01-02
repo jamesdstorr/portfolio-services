@@ -8,15 +8,25 @@ public class ArticleInput {
     private String content;
     private String imageUrl;
     private List<String> categories;
-    private boolean isPublished;
+    private boolean published;
+    private String id;
 
 
-    public boolean isPublished() {
-        return isPublished;
+    public String getId() {
+        return id;
     }
 
-    public void setPublished(boolean isPublished) {
-        this.isPublished = isPublished;
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public boolean getPublished() {
+        return published;
+    }
+
+    public void setPublished(boolean published) {
+        System.out.println(published);
+        this.published = published;
     }
 
     public List<String> getCategories(){

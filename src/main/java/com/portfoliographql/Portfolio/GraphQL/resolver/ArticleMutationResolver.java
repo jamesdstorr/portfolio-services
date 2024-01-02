@@ -1,4 +1,5 @@
 package com.portfoliographql.Portfolio.GraphQL.resolver;
+
 import java.time.LocalDate;
 
 import org.springframework.graphql.data.method.annotation.Argument;
@@ -12,8 +13,8 @@ import com.portfoliographql.Portfolio.GraphQL.repository.ArticleRepository;
 import graphql.kickstart.tools.GraphQLMutationResolver;
 
 @Controller
-public class ArticleMutationResolver implements GraphQLMutationResolver{
-    
+public class ArticleMutationResolver implements GraphQLMutationResolver {
+
     private final ArticleRepository articleRepository;
 
     public ArticleMutationResolver(ArticleRepository articleRepository) {
@@ -23,20 +24,37 @@ public class ArticleMutationResolver implements GraphQLMutationResolver{
     @MutationMapping
     public Article createArticle(@Argument("input") ArticleInput input) {
         System.out.println("createArticle");
-        LocalDate today = LocalDate.now();
-        try {
-            Article article = new Article();
-            article.setTitle(input.getTitle());
-            article.setSummary(input.getSummary());
-            article.setContent(input.getContent());
-            article.setImageUrl(input.getImageUrl());
-            article.setDate(today.toString());
-            article.setCategories(input.getCategories());
-            article.setPublished(input.isPublished());
-            System.out.println(article.getTitle());
-            return articleRepository.save(article);
-        } catch (Exception e) {
-            System.out.println(e);
+        System.out.println(input.getPublished());
+        if (input.getId() != null) {
+            try {
+                Article article = articleRepository.findById(input.getId()).get();
+                article.setTitle(input.getTitle());
+                article.setSummary(input.getSummary());
+                article.setContent(input.getContent());
+                article.setImageUrl(input.getImageUrl());
+                article.setCategories(input.getCategories());
+                article.setPublished(input.getPublished());
+                return articleRepository.save(article);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+
+        } else {
+            LocalDate today = LocalDate.now();
+            try {
+                Article article = new Article();
+                article.setTitle(input.getTitle());
+                article.setSummary(input.getSummary());
+                article.setContent(input.getContent());
+                article.setImageUrl(input.getImageUrl());
+                article.setDate(today.toString());
+                article.setCategories(input.getCategories());
+                article.setPublished(input.getPublished());
+                System.out.println(article.getTitle());
+                return articleRepository.save(article);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
         }
         return null;
     }

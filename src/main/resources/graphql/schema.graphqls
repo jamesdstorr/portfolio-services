@@ -13,11 +13,14 @@ input ArticleInput {
     content: String!
     imageUrl: String!
     categories: [String]
-    isPublished: Boolean!
+    published: Boolean!
+    id: String
 }
 
 type Mutation {
     createArticle(input: ArticleInput!): Article!
+    addCategory(name: String!)
+    
 }
 
 type Article {
@@ -28,7 +31,7 @@ type Article {
     imageUrl: String
     date: String
     categories: [String]
-    isPublished: Boolean
+    published: Boolean
 }
 
 type Category {
