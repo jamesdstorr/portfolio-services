@@ -17,6 +17,17 @@ public class Article {
     private String date;
     private List<String> categories;
     private boolean published;
+    private boolean project;
+
+
+    public boolean isProject() {
+        return project;
+    }
+
+
+    public void setProject(boolean project) {
+        this.project = project;
+    }
 
 
     public boolean getPublished() {

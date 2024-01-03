@@ -3,6 +3,8 @@ package com.portfoliographql.Portfolio.GraphQL.resolver;
 import graphql.kickstart.tools.GraphQLQueryResolver;
 import java.util.List;
 
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
@@ -21,11 +23,21 @@ public class ArticleQueryResolver implements GraphQLQueryResolver {
         this.articleRepository = articleRepository;
     }
 
-   
+    @QueryMapping
+    public List<Article> getAllPublishedArticles() {
+        return articleRepository.findAllPublished();
+    }
 
     @QueryMapping
     public List<Article> getAllArticles() {
         return articleRepository.findAll();
+    }
+
+  
+
+    @QueryMapping
+    public List<Article> getAllProjects() {
+        return articleRepository.findAllProjects();
     }
 
     @QueryMapping

@@ -24,7 +24,7 @@ public class ArticleMutationResolver implements GraphQLMutationResolver {
     @MutationMapping
     public Article createArticle(@Argument("input") ArticleInput input) {
         System.out.println("createArticle");
-        System.out.println(input.getPublished());
+        System.out.println(input.getCategories());
         if (input.getId() != null) {
             try {
                 Article article = articleRepository.findById(input.getId()).get();
@@ -34,6 +34,7 @@ public class ArticleMutationResolver implements GraphQLMutationResolver {
                 article.setImageUrl(input.getImageUrl());
                 article.setCategories(input.getCategories());
                 article.setPublished(input.getPublished());
+                article.setProject(input.isProject());;
                 return articleRepository.save(article);
             } catch (Exception e) {
                 System.out.println(e);

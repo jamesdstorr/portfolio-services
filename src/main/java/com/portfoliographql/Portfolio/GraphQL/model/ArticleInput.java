@@ -10,7 +10,16 @@ public class ArticleInput {
     private List<String> categories;
     private boolean published;
     private String id;
+    private boolean project;
 
+
+    public boolean isProject() {
+        return project;
+    }
+
+    public void setProject(boolean project) {
+        this.project = project;
+    }
 
     public String getId() {
         return id;
