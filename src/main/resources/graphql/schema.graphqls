@@ -19,7 +19,7 @@ input ArticleInput {
 
 type Mutation {
     createArticle(input: ArticleInput!): Article!
-    addCategory(name: String!)
+    createCategory(categoryName: String!): Category!
     
 }
 

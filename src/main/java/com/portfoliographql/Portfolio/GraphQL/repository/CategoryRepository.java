@@ -8,5 +8,5 @@ import com.portfoliographql.Portfolio.GraphQL.model.Category;
 
 @Repository
 public interface CategoryRepository extends MongoRepository<Category, String> {
-    
+
 }
