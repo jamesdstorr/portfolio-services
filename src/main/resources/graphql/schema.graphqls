@@ -1,7 +1,7 @@
 
 
 type Query {
-    getAllPublishedArticles: [Article!]
+    getAllPublishedArticles(categories: [String]): [Article!]
     getArticleById(id: String!): Article
     getArticlesByDate(from: String!, to: String!): [Article!]
     getCategories: [Category]

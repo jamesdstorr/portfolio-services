@@ -20,5 +20,8 @@ public interface ArticleRepository extends MongoRepository<Article, String> {
     @Query("{ 'project' : true, 'published' : true }")
     List<Article> findAllProjects();
 
+    @Query("{'categories': { $in: ?0 }, 'published' : true}")
+    List<Article> findByCategories(List<String> categories);
+
   
 }
