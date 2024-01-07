@@ -9,8 +9,10 @@ const cookieParser = require('cookie-parser');
 
 const app = express();
 
+
+
 const corsOptions = {
-  origin: 'http://localhost:3001', // Replace with your client's domain
+  origin: process.env.ORIGIN, // Replace with your client's domain
   credentials: true,
 };
 
@@ -30,7 +32,7 @@ async function startApolloServer() {
   await server.start(); // Ensure the server is started before applying middleware
   
   server.applyMiddleware({ app, path: '/graphql', cors: corsOptions });
-  const port = process.env.PORT || 4000;
+  const port = 8080;
   app.listen({ port: port }, () => {
     console.log(`Apollo Server on port ${port}/graphql`);
   });
