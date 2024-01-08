@@ -32,7 +32,7 @@ async function startApolloServer() {
   await server.start(); // Ensure the server is started before applying middleware
   
   server.applyMiddleware({ app, path: '/graphql', cors: corsOptions });
-  const port = process.env.PORT || 8000;
+  const port = 8181;
   app.listen({ port: port }, () => {
     console.log(`Apollo Server on port ${port}/graphql`);
   });
