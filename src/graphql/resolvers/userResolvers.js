@@ -44,7 +44,7 @@ const userResolvers = {
           token = createToken(user);
           res.cookie("token", token, {
             httpOnly: true,
-            secure: process.env.NODE_ENV === "production", // use secure in production
+            secure: "secure", // use secure in production
             sameSite: "none",
             maxAge: 24 * 60 * 60 * 1000, // 1 day
           }); 
