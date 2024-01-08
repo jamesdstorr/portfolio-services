@@ -25,28 +25,30 @@ const userResolvers = {
         const user = await User.createUser(newUser);
         token = createToken(user);
         res.cookie("token", token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === "production", // use secure in production
-            sameSite: "lax",
-            maxAge: 24 * 60 * 60 * 1000, // 1 day
+          httpOnly: true,
+          secure: process.env.NODE_ENV === "production", // use secure in production
+          sameSite: "lax",
+          maxAge: 24 * 60 * 60 * 1000, // 1 day
         });
         return { message: "Authenticated" };
       } catch (error) {
         throw new Error("Error creating user: " + error.message);
       }
     },
-    login: async (_, { username, password },  { res }) => {
+    login: async (_, { username, password }, { res }) => {
       try {
+        console.log(username);
         const user = await User.findOne({ username: username });
         console.log(user);
         if (user && User.verifyPassword(password, user.password)) {
           token = createToken(user);
           res.cookie("token", token, {
             httpOnly: true,
-            secure: process.env.NODE_ENV === "production", // use secure in production
-            sameSite: "lax",
+            secure: "secure", // use secure in production
+            sameSite: "none",
             maxAge: 24 * 60 * 60 * 1000, // 1 day
-          });
+          }); 
+          console.log(token);
           return { message: "Authenticated" };
         } else {
           throw new Error("Wrong password");
