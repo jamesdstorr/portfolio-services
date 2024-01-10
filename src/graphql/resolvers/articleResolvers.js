@@ -88,7 +88,15 @@ const articleResolvers = {
             { _id: input.id },
             updatedArticle
           );
-          return response;
+          if (response.nModified === 0) {
+            throw new Error("Article not updated");
+          }
+          else{
+            const article = await Article.getArticleById(input.id);
+            return article;
+          }
+          
+          
         } catch (error) {
           throw new Error("Error updating article: " + error.message);
         }
@@ -105,19 +113,20 @@ const articleResolvers = {
           date: formatDate(new Date()),
         };
         const response = await Article.createArticle(newArticle);
+        console.log(response)
         return response;
       } catch (error) {
         throw new Error("Error creating article: " + error.message);
       }
     },
-    /* deleteArticle: async (_, { input }) => {
+     deleteArticle: async (_, { id }) => {
         try {
-          const response = await Article.deleteOne({ _id: input.id });
+          const response = await Article.deleteOne({ _id: id });
           return response;
         } catch (error) {
           throw new Error("Error deleting article: " + error.message);
         }
-      } */
+      } 
   },
  
 };
