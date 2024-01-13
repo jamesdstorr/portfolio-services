@@ -9,6 +9,7 @@ type Query {
     getCategories: [Category]
     getAllProjects: [Article!]
     getAllArticles: [Article!]
+    verifyToken: AuthConfirmation!
 }
 
 input ArticleInput {
@@ -34,7 +35,7 @@ type Mutation {
     createCategory(categoryName: String!): Category!
     deleteArticle(id: String!): Boolean!
     login(username: String!, password: String!): AuthToken!
-    createUser(input:UserInput!): AuthConfirm!
+    createUser(input:UserInput!): AuthToken!
 }
 
 type Article {
@@ -58,8 +59,8 @@ type AuthToken {
     token: String!
 }
 
-type AuthConfirm {
-    message: String!
+type AuthConfirmation {
+    authenticated: Boolean
 }
 `;
 
