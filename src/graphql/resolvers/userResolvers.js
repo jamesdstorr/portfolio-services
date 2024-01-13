@@ -27,7 +27,7 @@ const userResolvers = {
         res.cookie("token", token, {
           httpOnly: true,
           secure: "secure", // use secure in production
-          sameSite: "none",
+          sameSite: "lax",
           maxAge: 24 * 60 * 60 * 1000, // 1 day
         });
         return { message: "Authenticated" };
