@@ -11,7 +11,25 @@ const createToken = (user) => {
 };
 
 const userResolvers = {
-  Query: {},
+  Query: {
+    verifyToken: async (_, args, context) => {
+      try {
+        const {token} = context;
+        console.log(token);
+        if (!token) {
+          return {authenticated: false};
+        }
+        const decoded = jwt.verify(token, process.env.SECRET);
+        const user = await User.findOne({ username: decoded.username });
+        if (!user) {
+          return {authenticated: false};
+        }
+        return {authenticated: true};
+      } catch (error) {
+        return {authenticated: false};;
+      }
+    }
+  },
   Mutation: {
     createUser: async (_, { input }, { res }) => {
       try {
