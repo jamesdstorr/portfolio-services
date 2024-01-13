@@ -32,6 +32,7 @@ input UserInput {
 type Mutation {
     createArticle(input: ArticleInput!): Article!
     createCategory(categoryName: String!): Category!
+    deleteArticle(id: String!): Boolean!
     login(username: String!, password: String!): AuthConfirm!
     createUser(input:UserInput!): AuthConfirm!
 }
