@@ -9,6 +9,10 @@ const cookieParser = require('cookie-parser');
 
 const app = express();
 
+app.use((req, res, next) => {
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  next();
+});
 
 
 const corsOptions = {

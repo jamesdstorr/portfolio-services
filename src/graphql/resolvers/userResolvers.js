@@ -29,8 +29,9 @@ const userResolvers = {
           secure: true, // use secure in production
           sameSite: "none",
           maxAge: 24 * 60 * 60 * 1000, // 1 day
-        });
-        return { message: "Authenticated" };
+          path: "/",
+        }); 
+        return { token: token };
       } catch (error) {
         throw new Error("Error creating user: " + error.message);
       }
@@ -42,18 +43,15 @@ const userResolvers = {
         console.log(user);
         if (user && User.verifyPassword(password, user.password)) {
           token = createToken(user);
-          res.cookie("token", token, {
+           res.cookie("token", token, {
             httpOnly: true,
             secure: true, // use secure in production
             sameSite: "none",
             maxAge: 24 * 60 * 60 * 1000, // 1 day
-          }); 
-          console.log("token");
-          console.log(token.secure);
-          console.log(token.sameSite);
-          console.log(token.maxAge);
-          console.log(token.httpOnly);
-          return { message: "Authenticated" };
+            path: "/",
+          });  
+          
+          return { token: token };
         } else {
           throw new Error("Wrong password");
         }
