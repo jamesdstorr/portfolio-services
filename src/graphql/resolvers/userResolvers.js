@@ -44,8 +44,8 @@ const userResolvers = {
           token = createToken(user);
           res.cookie("token", token, {
             httpOnly: true,
-            secure: "secure", // use secure in production
-            sameSite: "strict",
+            secure: true, // use secure in production
+            sameSite: "lax",
             maxAge: 24 * 60 * 60 * 1000, // 1 day
           }); 
           console.log(token);
