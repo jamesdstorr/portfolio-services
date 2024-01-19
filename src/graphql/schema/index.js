@@ -3,7 +3,7 @@ const { gql } = require('apollo-server-express');
 
 const typeDefs = gql`
 type Query {
-    getAllPublishedArticles(categories: [String]): [Article!]
+    getAllPublishedArticles(categories: [String], limit: Int, offset: Int): getAllPublishedArticlesResponse
     getArticleById(id: String!): Article
     getArticlesByDate(from: String!, to: String!): [Article!]
     getCategories: [Category]
@@ -61,6 +61,11 @@ type AuthToken {
 
 type AuthConfirmation {
     authenticated: Boolean
+}
+
+type getAllPublishedArticlesResponse {
+    articles: [Article!]
+    total: Int!
 }
 `;
 

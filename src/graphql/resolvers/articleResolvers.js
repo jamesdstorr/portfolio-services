@@ -21,10 +21,10 @@ function formatDate(date) {
 
 const articleResolvers = {
   Query: {
-    getAllPublishedArticles: async (_, { categories }) => {
+    getAllPublishedArticles: async (_, { categories, limit, offset }) => {
         console.log(categories)
       try {
-        const articles = await Article.getAllPublishedArticles(categories);
+        const articles = await Article.getAllPublishedArticles(categories, limit, offset);
         return articles;
       } catch (error) {
         throw new Error("Error fetching published articles: " + error.message);

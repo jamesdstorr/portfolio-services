@@ -38,19 +38,27 @@ const articleSchema = new mongoose.Schema({
 
 const Article = mongoose.model('Article', articleSchema);
 
-Article.getAllPublishedArticles = async (categories) => {
+Article.getAllPublishedArticles = async (categories, limit, offset) => {
     if(categories.length> 0){
         try {
-            const articles = await Article.find({ published: true, categories: { $in: categories } }).sort({date: -1});
-            return articles;
+            const total = await Article.find({ published: true, categories: { $in: categories } }).countDocuments();
+            const articles = await Article.find({ published: true, categories: { $in: categories } })
+            .sort({date: -1})
+            .skip(offset)
+            .limit(limit);
+            return {articles, total};
           } catch (error) {
             throw new Error('Error fetching published articles: ' + error.message);
           }
     }
     else {
         try {
-            const articles = await Article.find({ published: true });
-            return articles;
+            const total = await Article.find({ published: true }).countDocuments();
+            const articles = await Article.find({ published: true })
+            .sort({date: -1})
+            .skip(offset)
+            .limit(limit);
+            return {articles, total};
           } catch (error) {
             throw new Error('Error fetching published articles: ' + error.message);
           }
