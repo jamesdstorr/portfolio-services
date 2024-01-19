@@ -41,7 +41,7 @@ const Article = mongoose.model('Article', articleSchema);
 Article.getAllPublishedArticles = async (categories) => {
     if(categories.length> 0){
         try {
-            const articles = await Article.find({ published: true, categories: { $in: categories } });
+            const articles = await Article.find({ published: true, categories: { $in: categories } }).sort({date: -1});
             return articles;
           } catch (error) {
             throw new Error('Error fetching published articles: ' + error.message);
