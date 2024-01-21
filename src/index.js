@@ -16,7 +16,7 @@ app.use((req, res, next) => {
 
 
 const corsOptions = {
-  origin: 'https://studio.apollographql.com',
+  origin: ['https://studio.apollographql.com'],
   credentials: true,
 };
 
