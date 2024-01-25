@@ -107,7 +107,7 @@ const articleResolvers = {
           
         } catch (error) {
           throw new Error("Error updating article: " + error.message);
-        }
+        } 
       }
       try {
         const newArticle = {
