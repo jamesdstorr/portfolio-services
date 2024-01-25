@@ -22,7 +22,6 @@ function formatDate(date) {
 const articleResolvers = {
   Query: {
     getAllPublishedArticles: async (_, { categories, limit, offset }) => {
-        console.log(categories)
       try {
         const articles = await Article.getAllPublishedArticles(categories, limit, offset);
         return articles;
@@ -71,7 +70,16 @@ const articleResolvers = {
     },
   },
   Mutation: {
-    createArticle: async (_, { input }) => {
+    createArticle: async (_, { input }, context) => {
+      const {token} = context;
+      if(!token){
+        throw new Error('Authentication required');
+      }
+      
+      if(verifyToken(token, process.env.SECRET).username !== 'admin'){
+        throw new Error('Authentication failed');
+      }
+
       if (input.id) {
         try {
           const updatedArticle = {

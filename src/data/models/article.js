@@ -39,7 +39,8 @@ const articleSchema = new mongoose.Schema({
 const Article = mongoose.model('Article', articleSchema);
 
 Article.getAllPublishedArticles = async (categories, limit, offset) => {
-    if(categories.length> 0){
+   
+    if(categories && categories.length > 0){
         try {
             const total = await Article.find({ published: true, categories: { $in: categories } }).countDocuments();
             const articles = await Article.find({ published: true, categories: { $in: categories } })
