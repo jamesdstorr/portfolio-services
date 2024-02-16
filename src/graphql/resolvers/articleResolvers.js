@@ -12,18 +12,15 @@ function verifyToken(token, secret) {
   }
 }
 
-function formatDate(date) {
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    return `${day}-${month}-${year}`;
-  }
-
 const articleResolvers = {
   Query: {
     getAllPublishedArticles: async (_, { categories, limit, offset }) => {
       try {
-        const articles = await Article.getAllPublishedArticles(categories, limit, offset);
+        const articles = await Article.getAllPublishedArticles(
+          categories,
+          limit,
+          offset
+        );
         return articles;
       } catch (error) {
         throw new Error("Error fetching published articles: " + error.message);
@@ -54,13 +51,13 @@ const articleResolvers = {
       }
     },
     getAllArticles: async (_, args, context) => {
-        const {token} = context;
-        
-        if(!token){
-            throw new Error('Authentication required');
-        }
-        const decoded = verifyToken(token, process.env.SECRET);
-      
+      const { token } = context;
+
+      if (!token) {
+        throw new Error("Authentication required");
+      }
+      const decoded = verifyToken(token, process.env.SECRET);
+
       try {
         const articles = await Article.getAllArticles();
         return articles;
@@ -71,13 +68,13 @@ const articleResolvers = {
   },
   Mutation: {
     createArticle: async (_, { input }, context) => {
-      const {token} = context;
-      if(!token){
-        throw new Error('Authentication required');
+      const { token } = context;
+      if (!token) {
+        throw new Error("Authentication required");
       }
-      
-      if(verifyToken(token, process.env.SECRET).username !== 'admin'){
-        throw new Error('Authentication failed');
+
+      if (verifyToken(token, process.env.SECRET).username !== "admin") {
+        throw new Error("Authentication failed");
       }
 
       if (input.id) {
@@ -98,8 +95,7 @@ const articleResolvers = {
           );
           if (response.nModified === 0) {
             throw new Error("Article not updated");
-          }
-          else{
+          } else {
             const article = await Article.getArticleById(input.id);
             return article;
           }
@@ -119,22 +115,29 @@ const articleResolvers = {
           date: new Date().toISOString().slice(0, 10),
         };
         const response = await Article.createArticle(newArticle);
-        console.log(response)
+        console.log(response);
         return response;
       } catch (error) {
         throw new Error("Error creating article: " + error.message);
       }
     },
-     deleteArticle: async (_, { id }) => {
-        try {
-          const response = await Article.deleteOne({ _id: id });
-          return response;
-        } catch (error) {
-          throw new Error("Error deleting article: " + error.message);
-        }
-      } 
+    deleteArticle: async (_, { id }, context) => {
+      const { token } = context;
+      if (!token) {
+        throw new Error("Authentication required");
+      }
+
+      if (verifyToken(token, process.env.SECRET).username !== "admin") {
+        throw new Error("Authentication failed");
+      }
+      try {
+        const response = await Article.deleteOne({ _id: id });
+        return response;
+      } catch (error) {
+        throw new Error("Error deleting article: " + error.message);
+      }
+    },
   },
- 
 };
 
 module.exports = articleResolvers;

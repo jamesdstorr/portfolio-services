@@ -31,7 +31,17 @@ const userResolvers = {
     }
   },
   Mutation: {
-    createUser: async (_, { input }, { res }) => {
+    createUser: async (_, { input }, { res, context }) => {
+      const {token} = context;
+      if(!token){
+        throw new Error('Authentication required');
+      }
+      
+      if(verifyToken(token, process.env.SECRET).username !== 'admin'){
+        throw new Error('Authentication failed');
+      }
+
+
       try {
         const newUser = {
           username: input.username,
