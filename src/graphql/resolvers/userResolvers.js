@@ -31,7 +31,17 @@ const userResolvers = {
     }
   },
   Mutation: {
-    createUser: async (_, { input }, { res }) => {
+    createUser: async (_, { input }, { res, context }) => {
+      const {token} = context;
+      if(!token){
+        throw new Error('Authentication required');
+      }
+      
+      if(verifyToken(token, process.env.SECRET).username !== 'admin'){
+        throw new Error('Authentication failed');
+      }
+
+
       try {
         const newUser = {
           username: input.username,
@@ -39,7 +49,8 @@ const userResolvers = {
           lastName: input.lastName,
           password: input.password,
         };
-
+        const userExists = await User.findOne({ username: newUser.username });
+        if (!userExists) {
         const user = await User.createUser(newUser);
         token = createToken(user);
         res.cookie("token", token, {
@@ -48,8 +59,8 @@ const userResolvers = {
           sameSite: "none",
           maxAge: 24 * 60 * 60 * 1000, // 1 day
           path: "/",
-        }); 
-        return { token: token };
+        });
+        return { token: token }}
       } catch (error) {
         throw new Error("Error creating user: " + error.message);
       }
@@ -67,8 +78,7 @@ const userResolvers = {
             sameSite: "none",
             maxAge: 24 * 60 * 60 * 1000, // 1 day
             path: "/",
-          });  
-          
+          });
           return { token: token };
         } else {
           throw new Error("Wrong password");
