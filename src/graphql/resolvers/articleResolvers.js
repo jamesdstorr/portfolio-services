@@ -90,7 +90,7 @@ const articleResolvers = {
             categories: input.categories,
             published: input.published,
             project: input.project,
-            date: formatDate(new Date()),
+            date: new Date().toISOString().slice(0, 10),
           };
           const response = await Article.updateOne(
             { _id: input.id },
@@ -103,11 +103,9 @@ const articleResolvers = {
             const article = await Article.getArticleById(input.id);
             return article;
           }
-          
-          
         } catch (error) {
           throw new Error("Error updating article: " + error.message);
-        } 
+        }
       }
       try {
         const newArticle = {
@@ -118,7 +116,7 @@ const articleResolvers = {
           categories: input.categories,
           published: input.published,
           project: input.project,
-          date: formatDate(new Date()),
+          date: new Date().toISOString().slice(0, 10),
         };
         const response = await Article.createArticle(newArticle);
         console.log(response)
